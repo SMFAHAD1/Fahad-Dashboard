@@ -17,7 +17,7 @@ const SUBJECT_COLORS = [
   { bg: "#fff8e1", color: "#854F0B" },
   { bg: "#fce8e8", color: "#A32D2D" },
   { bg: "#f3e8ff", color: "#6B21A8" },
-  { bg: "#e0f7fa", color: "#0B6E74" },
+  { bg: "#16292b", color: "#0B6E74" },
 ];
 
 const STATUS_OPTIONS = ["ongoing", "completed", "upcoming", "dropped"];
@@ -108,14 +108,20 @@ function calcFinalCGPA(terms) {
 }
 
 // ── Shared style helpers ──────────────────────────────────────────────────
-const labelStyle = { fontSize: 11, color: "#888", display: "block", marginBottom: 3 };
+const pageTitleStyle = { marginBottom: 20, fontSize: 28, fontWeight: 800, color: "#111827" };
+const sectionTitleStyle = { fontSize: 18, fontWeight: 800, marginBottom: 12, color: "#111827" };
+const cardSectionTitleStyle = { fontSize: 14, fontWeight: 700, color: "#344054", marginBottom: 10 };
+const labelStyle = { fontSize: 11, fontWeight: 700, color: "#98a2b3", display: "block", marginBottom: 5, letterSpacing: 0.2 };
+const subTextStyle = { fontSize: 11, color: "#667085", fontWeight: 600 };
+const actionLinkStyle = { background: "none", border: "none", cursor: "pointer", color: "#475467", fontSize: 11, fontWeight: 700, padding: 0 };
+const ghostActionButtonStyle = { background: "#ffffff", border: "1px solid #d0d5dd", borderRadius: 8, padding: "8px 12px", cursor: "pointer", color: "#475467", fontSize: 12, fontWeight: 700 };
 
 function pill(bg, color) {
-  return { fontSize: 11, padding: "3px 10px", borderRadius: 99, background: bg, color, fontWeight: 500 };
+  return { fontSize: 11, padding: "4px 10px", borderRadius: 99, background: bg, color, fontWeight: 700, border: "1px solid #d9dee7" };
 }
 
 function statBox(bg, color) {
-  return { padding: "10px 16px", borderRadius: 10, background: bg, color, textAlign: "center", minWidth: 80 };
+  return { padding: "12px 16px", borderRadius: 10, background: bg, color, textAlign: "center", minWidth: 80, border: "1px solid #d9dee7", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.4)" };
 }
 
 // ── Overall CGPA Summary ──────────────────────────────────────────────────
@@ -134,10 +140,10 @@ function CGPASummary({ terms }) {
 
   return (
     <div style={{ marginBottom: 20, padding: "16px 20px", borderRadius: 12,
-      border: "1px solid #e0e0e0", background: "#fafafa" }}>
+      border: "1px solid #d9dee7", background: "#ffffff" }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between",
         flexWrap: "wrap", gap: 10, marginBottom: 14 }}>
-        <span style={{ fontSize: 13, fontWeight: 600, color: "#555", letterSpacing: 0.4 }}>📊 OVERALL CGPA</span>
+        <span style={{ fontSize: 13, fontWeight: 600, color: "#d0d5dd", letterSpacing: 0.4 }}>📊 OVERALL CGPA</span>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
           <span style={pill("#e8f0fe", "#185FA5")}>{totalCourses} courses</span>
           <span style={pill("#f3e8ff", "#6B21A8")}>{totalCredits} credits</span>
@@ -151,7 +157,7 @@ function CGPASummary({ terms }) {
           <div style={{ fontSize: 40, fontWeight: 800, color, lineHeight: 1 }}>{finalCGPA.toFixed(2)}</div>
           <div style={{ fontSize: 12, color, marginTop: 4, fontWeight: 500 }}>CGPA / 4.0</div>
           <div style={{ fontSize: 11, color, opacity: 0.8, marginTop: 2 }}>{gradeLabel(finalCGPA)}</div>
-          <div style={{ fontSize: 10, color: "#aaa", marginTop: 6 }}>Σ term GPAs ÷ {completedTermsWithGPA.length}</div>
+          <div style={{ fontSize: 10, color: "#667085", marginTop: 6 }}>Σ term GPAs ÷ {completedTermsWithGPA.length}</div>
         </div>
 
         {/* Per-term bars */}
@@ -164,9 +170,9 @@ function CGPASummary({ terms }) {
               return (
                 <div key={t.id}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                    <span style={{ fontSize: 12, fontWeight: 600, color: "#444", minWidth: 120,
+                    <span style={{ fontSize: 12, fontWeight: 600, color: "#475467", minWidth: 120,
                       overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{t.name}</span>
-                    <div style={{ flex: 1, height: 8, background: "#eee", borderRadius: 99, overflow: "hidden" }}>
+                    <div style={{ flex: 1, height: 8, background: "#e5e7eb", borderRadius: 99, overflow: "hidden" }}>
                       <div style={{ width: `${(gpa / 4) * 100}%`, height: "100%",
                         background: col.color, borderRadius: 99, transition: "width 0.4s" }} />
                     </div>
@@ -188,11 +194,11 @@ function CGPASummary({ terms }) {
               );
             })}
             <div style={{ display: "flex", justifyContent: "flex-end", paddingTop: 8,
-              borderTop: "1px dashed #eee", gap: 10 }}>
-              <span style={{ fontSize: 11, color: "#888" }}>
+              borderTop: "1px dashed #d9dee7", gap: 10 }}>
+              <span style={{ fontSize: 11, color: "#667085" }}>
                 Sum: {completedTermsWithGPA.reduce((s, t) => s + calcTermGPA(t.courses), 0).toFixed(2)}
               </span>
-              <span style={{ fontSize: 11, color: "#888" }}>÷ {completedTermsWithGPA.length} terms</span>
+              <span style={{ fontSize: 11, color: "#667085" }}>÷ {completedTermsWithGPA.length} terms</span>
               <span style={{ fontSize: 13, fontWeight: 700, color }}>= {finalCGPA.toFixed(2)}</span>
             </div>
           </div>
@@ -203,7 +209,7 @@ function CGPASummary({ terms }) {
 }
 
 // ── Single Term Block ─────────────────────────────────────────────────────
-function TermBlock({ term, onUpdateTerm, onDeleteTerm, colorOffset }) {
+function TermBlock({ term, onUpdateTerm, onDeleteTerm, onEditTerm, colorOffset }) {
   const [courseName,   setCourseName]   = useState("");
   const [courseInst,   setCourseInst]   = useState("");
   const [courseStatus, setCourseStatus] = useState("ongoing");
@@ -212,28 +218,48 @@ function TermBlock({ term, onUpdateTerm, onDeleteTerm, colorOffset }) {
   const [courseStart,  setCourseStart]  = useState("");
   const [courseEnd,    setCourseEnd]    = useState("");
   const [collapsed,    setCollapsed]    = useState(false);
+  const [editingCourseId, setEditingCourseId] = useState(null);
 
   function addCourse() {
     if (!courseName.trim()) return;
+    const existing = editingCourseId ? term.courses.find(c => c.id === editingCourseId) : null;
+    const entry = {
+      id: editingCourseId || Date.now(),
+      name: courseName.trim(),
+      institution: courseInst.trim(),
+      status: courseStatus,
+      grade: courseGrade.trim(),
+      credit: courseCredit !== "" ? parseFloat(courseCredit) : 0,
+      startDate: courseStart,
+      endDate: courseEnd,
+      colorIdx: existing?.colorIdx ?? ((colorOffset + term.courses.length) % SUBJECT_COLORS.length),
+    };
     onUpdateTerm(term.id, {
-      courses: [...term.courses, {
-        id: Date.now(),
-        name: courseName.trim(),
-        institution: courseInst.trim(),
-        status: courseStatus,
-        grade: courseGrade.trim(),
-        credit: courseCredit !== "" ? parseFloat(courseCredit) : 0,
-        startDate: courseStart,
-        endDate: courseEnd,
-        colorIdx: (colorOffset + term.courses.length) % SUBJECT_COLORS.length,
-      }],
+      courses: editingCourseId ? term.courses.map(c => c.id === editingCourseId ? entry : c) : [...term.courses, entry],
     });
     setCourseName(""); setCourseInst(""); setCourseGrade("");
     setCourseCredit(""); setCourseStart(""); setCourseEnd(""); setCourseStatus("ongoing");
+    setEditingCourseId(null);
   }
 
   function deleteCourse(cid) {
     onUpdateTerm(term.id, { courses: term.courses.filter(c => c.id !== cid) });
+    if (editingCourseId === cid) {
+      setEditingCourseId(null);
+      setCourseName(""); setCourseInst(""); setCourseGrade("");
+      setCourseCredit(""); setCourseStart(""); setCourseEnd(""); setCourseStatus("ongoing");
+    }
+  }
+
+  function startEditCourse(course) {
+    setEditingCourseId(course.id);
+    setCourseName(course.name || "");
+    setCourseInst(course.institution || "");
+    setCourseStatus(course.status || "ongoing");
+    setCourseGrade(course.grade || "");
+    setCourseCredit(course.credit ? String(course.credit) : "");
+    setCourseStart(course.startDate || "");
+    setCourseEnd(course.endDate || "");
   }
 
   function updateCourseField(cid, field, val) {
@@ -249,18 +275,18 @@ function TermBlock({ term, onUpdateTerm, onDeleteTerm, colorOffset }) {
   const tStyle = TERM_STATUS_STYLES[term.status] || TERM_STATUS_STYLES.ongoing;
 
   return (
-    <div style={{ border: "1px solid #e0e0e0", borderRadius: 12, overflow: "hidden",
-      marginBottom: 16, background: "#fff" }}>
+    <div style={{ border: "1px solid #d9dee7", borderRadius: 12, overflow: "hidden",
+      marginBottom: 16, background: "#ffffff", boxShadow: "0 1px 2px rgba(16,24,40,0.04)" }}>
 
       {/* Term header */}
-      <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 16px",
-        background: "#fafafa", borderBottom: collapsed ? "none" : "1px solid #eee", flexWrap: "wrap" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "14px 16px",
+        background: "#f8fafc", borderBottom: collapsed ? "none" : "1px solid #d9dee7", flexWrap: "wrap" }}>
         <button onClick={() => setCollapsed(p => !p)}
           style={{ background: "none", border: "none", cursor: "pointer",
-            fontSize: 13, color: "#888", padding: 0 }}>
+            fontSize: 13, color: "#667085", padding: 0 }}>
           {collapsed ? "▶" : "▼"}
         </button>
-        <span style={{ fontWeight: 700, fontSize: 15, color: "#222", flex: 1, minWidth: 120 }}>{term.name}</span>
+        <span style={{ fontWeight: 800, fontSize: 16, color: "#111827", flex: 1, minWidth: 120 }}>{term.name}</span>
         <select value={term.status} onChange={e => onUpdateTerm(term.id, { status: e.target.value })}
           style={{ fontSize: 11, fontWeight: 600, padding: "3px 10px", borderRadius: 99, border: "none",
             background: tStyle.bg, color: tStyle.color, cursor: "pointer" }}>
@@ -274,6 +300,8 @@ function TermBlock({ term, onUpdateTerm, onDeleteTerm, colorOffset }) {
             GPA {termGPA.toFixed(2)}
           </span>
         )}
+        <button onClick={() => onEditTerm(term)}
+          style={actionLinkStyle}>Edit</button>
         <button onClick={() => onDeleteTerm(term.id)}
           style={{ background: "none", border: "none", cursor: "pointer", color: "#ddd", fontSize: 14, padding: "0 4px" }}>✕</button>
       </div>
@@ -282,9 +310,11 @@ function TermBlock({ term, onUpdateTerm, onDeleteTerm, colorOffset }) {
         <div style={{ padding: "14px 16px" }}>
 
           {/* Add course form */}
-          <div style={{ background: "#fafafa", borderRadius: 10, padding: "12px 14px",
-            marginBottom: 14, border: "1px solid #f0f0f0" }}>
-            <p style={{ fontSize: 12, fontWeight: 600, color: "#888", marginBottom: 10 }}>Add course to {term.name}</p>
+          <div style={{ background: "#f8fafc", borderRadius: 10, padding: "12px 14px",
+            marginBottom: 14, border: "1px solid #d9dee7" }}>
+            <p style={cardSectionTitleStyle}>
+              {editingCourseId ? `Edit course in ${term.name}` : `Add course to ${term.name}`}
+            </p>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "flex-end" }}>
               <div style={{ flex: 2, minWidth: 150 }}>
                 <label style={labelStyle}>Course name</label>
@@ -323,16 +353,25 @@ function TermBlock({ term, onUpdateTerm, onDeleteTerm, colorOffset }) {
                 <label style={labelStyle}>End date</label>
                 <input type="date" value={courseEnd} onChange={e => setCourseEnd(e.target.value)} />
               </div>
-              <div style={{ fontSize: 10, color: "#bbb", alignSelf: "flex-end", paddingBottom: 6, flex: 2 }}>
+              <div style={{ ...subTextStyle, alignSelf: "flex-end", paddingBottom: 6, flex: 2 }}>
                 Use letter grades or GPA values from 0.0 to 4.0 only
               </div>
-              <button onClick={addCourse} style={{ alignSelf: "flex-end" }}>Add Course</button>
+              <div style={{ display: "flex", gap: 8 }}>
+                <button onClick={addCourse} style={{ alignSelf: "flex-end" }}>{editingCourseId ? "Save Course" : "Add Course"}</button>
+                {editingCourseId && (
+                  <button onClick={() => {
+                    setEditingCourseId(null);
+                    setCourseName(""); setCourseInst(""); setCourseGrade("");
+                    setCourseCredit(""); setCourseStart(""); setCourseEnd(""); setCourseStatus("ongoing");
+                  }} style={{ ...ghostActionButtonStyle, alignSelf: "flex-end" }}>Cancel</button>
+                )}
+              </div>
             </div>
           </div>
 
           {/* Course cards grid */}
           {term.courses.length === 0 && (
-            <p style={{ fontSize: 12, color: "#ccc", textAlign: "center", padding: "12px 0" }}>No courses yet.</p>
+            <p style={{ fontSize: 12, color: "#667085", textAlign: "center", padding: "12px 0" }}>No courses yet.</p>
           )}
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(185px, 1fr))", gap: 10, marginBottom: 12 }}>
             {term.courses.map(c => {
@@ -344,8 +383,8 @@ function TermBlock({ term, onUpdateTerm, onDeleteTerm, colorOffset }) {
                   <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3,
                     borderRadius: "10px 10px 0 0", background: col.color }} />
                   <div style={{ marginTop: 6 }}>
-                    <p style={{ fontWeight: 600, fontSize: 13, marginBottom: 2, lineHeight: 1.3 }}>{c.name}</p>
-                    {c.institution && <p style={{ fontSize: 10, color: "#aaa", marginBottom: 4 }}>{c.institution}</p>}
+                    <p style={{ fontWeight: 800, fontSize: 14, marginBottom: 3, lineHeight: 1.3, color: "#111827" }}>{c.name}</p>
+                    {c.institution && <p style={{ fontSize: 11, color: "#667085", marginBottom: 5, fontWeight: 600 }}>{c.institution}</p>}
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 6, marginBottom: 4 }}>
                       <select value={c.status}
                         onChange={e => updateCourseField(c.id, "status", e.target.value)}
@@ -353,11 +392,11 @@ function TermBlock({ term, onUpdateTerm, onDeleteTerm, colorOffset }) {
                           border: "none", background: st.bg, color: st.color, cursor: "pointer" }}>
                         {STATUS_OPTIONS.map(s => <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>)}
                       </select>
-                      {c.credit > 0 && <span style={{ fontSize: 10, color: "#aaa" }}>{c.credit} cr</span>}
+                      {c.credit > 0 && <span style={{ fontSize: 10, color: "#667085" }}>{c.credit} cr</span>}
                     </div>
                     {(c.grade || gp !== null) && (
                       <div style={{ display: "flex", gap: 5, alignItems: "center", marginBottom: 4 }}>
-                        {c.grade && <span style={{ fontSize: 13, fontWeight: 700, color: col.color }}>{c.grade}</span>}
+                        {c.grade && <span style={{ fontSize: 14, fontWeight: 800, color: col.color }}>{c.grade}</span>}
                         {gp !== null && (
                           <span style={{ fontSize: 10, padding: "1px 6px", borderRadius: 99,
                             background: cgpaColor(gp).bg, color: cgpaColor(gp).color, fontWeight: 600 }}>
@@ -368,13 +407,14 @@ function TermBlock({ term, onUpdateTerm, onDeleteTerm, colorOffset }) {
                     )}
                     {(c.startDate || c.endDate) && (
                       <div style={{ marginTop: 6, paddingTop: 6, borderTop: "0.5px solid #eee" }}>
-                        {c.startDate && <p style={{ fontSize: 10, color: "#888", marginBottom: 1 }}>▶ {formatDate(c.startDate)}</p>}
-                        {c.endDate   && <p style={{ fontSize: 10, color: "#888" }}>⬛ {formatDate(c.endDate)}</p>}
+                        {c.startDate && <p style={{ fontSize: 10, color: "#667085", marginBottom: 1 }}>▶ {formatDate(c.startDate)}</p>}
+                        {c.endDate   && <p style={{ fontSize: 10, color: "#667085" }}>⬛ {formatDate(c.endDate)}</p>}
                       </div>
                     )}
-                    <button onClick={() => deleteCourse(c.id)}
-                      style={{ marginTop: 8, fontSize: 10, color: "#ccc", background: "none",
-                        border: "none", cursor: "pointer", padding: 0 }}>Remove</button>
+                    <div style={{ display: "flex", gap: 10, marginTop: 8 }}>
+                      <button onClick={() => startEditCourse(c)} style={actionLinkStyle}>Edit</button>
+                      <button onClick={() => deleteCourse(c.id)} style={actionLinkStyle}>Remove</button>
+                    </div>
                   </div>
                 </div>
               );
@@ -384,8 +424,8 @@ function TermBlock({ term, onUpdateTerm, onDeleteTerm, colorOffset }) {
           {/* Term GPA formula breakdown */}
           {eligibleCourses.length > 0 && (
             <div style={{ padding: "10px 14px", background: "#fafafa", borderRadius: 10,
-              border: "1px solid #f0f0f0" }}>
-              <p style={{ fontSize: 11, fontWeight: 600, color: "#888", marginBottom: 8 }}>
+              border: "1px solid #d9dee7" }}>
+              <p style={{ fontSize: 11, fontWeight: 800, color: "#475467", marginBottom: 8 }}>
                 GPA Breakdown — {term.name}
               </p>
               <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
@@ -394,15 +434,15 @@ function TermBlock({ term, onUpdateTerm, onDeleteTerm, colorOffset }) {
                   const col = cgpaColor(gp);
                   return (
                     <div key={c.id} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                      <span style={{ fontSize: 11, color: "#555", minWidth: 120, overflow: "hidden",
+                      <span style={{ fontSize: 11, color: "#344054", minWidth: 120, overflow: "hidden",
                         textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{c.name}</span>
-                      <span style={{ fontSize: 10, color: "#aaa", minWidth: 28 }}>{c.credit}cr</span>
+                      <span style={{ fontSize: 10, color: "#667085", minWidth: 28 }}>{c.credit}cr</span>
                       <div style={{ flex: 1, height: 5, background: "#eee", borderRadius: 99, overflow: "hidden" }}>
                         <div style={{ width: `${(gp / 4) * 100}%`, height: "100%",
                           background: col.color, borderRadius: 99 }} />
                       </div>
                       <span style={{ fontSize: 11, fontWeight: 700, color: col.color, minWidth: 28, textAlign: "right" }}>{gp.toFixed(1)}</span>
-                      <span style={{ fontSize: 10, color: "#aaa", minWidth: 46, textAlign: "right" }}>
+                      <span style={{ fontSize: 10, color: "#667085", minWidth: 46, textAlign: "right" }}>
                         {c.credit}×{gp.toFixed(1)}={(c.credit * gp).toFixed(2)}
                       </span>
                     </div>
@@ -411,10 +451,10 @@ function TermBlock({ term, onUpdateTerm, onDeleteTerm, colorOffset }) {
                 {/* Formula row */}
                 <div style={{ display: "flex", justifyContent: "flex-end", gap: 10, marginTop: 4,
                   paddingTop: 6, borderTop: "0.5px solid #eee" }}>
-                  <span style={{ fontSize: 11, color: "#888" }}>
+                  <span style={{ fontSize: 11, color: "#667085" }}>
                     Sum(credit x GP) = {totalQualityPoints.toFixed(2)}
                   </span>
-                  <span style={{ fontSize: 11, color: "#888" }}>/ {totalCredits.toFixed(1)} credits</span>
+                  <span style={{ fontSize: 11, color: "#667085" }}>/ {totalCredits.toFixed(1)} credits</span>
                   <span style={{ fontSize: 12, fontWeight: 700, color: cgpaColor(termGPA).color }}>
                     = {termGPA.toFixed(2)}
                   </span>
@@ -429,14 +469,14 @@ function TermBlock({ term, onUpdateTerm, onDeleteTerm, colorOffset }) {
 }
 
 // ── Class Tests ───────────────────────────────────────────────────────────
-function ClassTests({ terms }) {
-  const [tests, setTests]             = useState([]);
+function ClassTests({ terms, tests, setTests }) {
   const [testTitle, setTestTitle]     = useState("");
   const [testSubject, setTestSubject] = useState("");
   const [testDate, setTestDate]       = useState("");
   const [testScore, setTestScore]     = useState("");
   const [testTotal, setTestTotal]     = useState("");
   const [activeTab, setActiveTab]     = useState("all");
+  const [editingTestId, setEditingTestId] = useState(null);
 
   const allCourseNames = [
     ...new Set(terms.flatMap(t => t.courses.map(c => c.name)).filter(Boolean)),
@@ -445,18 +485,35 @@ function ClassTests({ terms }) {
 
   function addTest() {
     if (!testTitle.trim() || testTotal === "") return;
-    setTests(prev => [...prev, {
-      id: Date.now(),
+    const entry = {
+      id: editingTestId || Date.now(),
       title: testTitle.trim(),
       subject: testSubject.trim(),
       date: testDate,
       score: testScore !== "" ? parseFloat(testScore) : null,
       total: parseFloat(testTotal),
-    }]);
+    };
+    setTests(prev => editingTestId ? prev.map(t => t.id === editingTestId ? entry : t) : [...prev, entry]);
     setTestTitle(""); setTestSubject(""); setTestDate(""); setTestScore(""); setTestTotal("");
+    setEditingTestId(null);
   }
 
-  function deleteTest(id) { setTests(prev => prev.filter(t => t.id !== id)); }
+  function deleteTest(id) {
+    setTests(prev => prev.filter(t => t.id !== id));
+    if (editingTestId === id) {
+      setEditingTestId(null);
+      setTestTitle(""); setTestSubject(""); setTestDate(""); setTestScore(""); setTestTotal("");
+    }
+  }
+
+  function startEditTest(test) {
+    setEditingTestId(test.id);
+    setTestTitle(test.title || "");
+    setTestSubject(test.subject || "");
+    setTestDate(test.date || "");
+    setTestScore(test.score != null ? String(test.score) : "");
+    setTestTotal(test.total != null ? String(test.total) : "");
+  }
 
   const testSubjects = [...new Set(tests.map(t => t.subject).filter(Boolean))];
 
@@ -475,10 +532,13 @@ function ClassTests({ terms }) {
 
   return (
     <div>
-      <h3 style={{ fontSize: 15, fontWeight: 600, marginBottom: 10, color: "#444" }}>Class Tests</h3>
+      <h3 style={sectionTitleStyle}>Class Tests</h3>
 
       {/* Add form */}
       <div className="card" style={{ marginBottom: 16 }}>
+        <p style={cardSectionTitleStyle}>
+          {editingTestId ? "Edit class test" : "Add class test"}
+        </p>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "flex-end" }}>
           <div style={{ flex: 2, minWidth: 160 }}>
             <label style={labelStyle}>Test / Quiz title</label>
@@ -508,12 +568,20 @@ function ClassTests({ terms }) {
             <label style={labelStyle}>Test date</label>
             <input type="date" value={testDate} onChange={e => setTestDate(e.target.value)} style={{ width: "100%" }} />
           </div>
-          <button onClick={addTest} style={{ alignSelf: "flex-end" }}>Add Test</button>
+          <div style={{ display: "flex", gap: 8 }}>
+            <button onClick={addTest} style={{ alignSelf: "flex-end" }}>{editingTestId ? "Save Test" : "Add Test"}</button>
+            {editingTestId && (
+              <button onClick={() => {
+                setEditingTestId(null);
+                setTestTitle(""); setTestSubject(""); setTestDate(""); setTestScore(""); setTestTotal("");
+              }} style={{ alignSelf: "flex-end" }}>Cancel</button>
+            )}
+          </div>
         </div>
       </div>
 
       {tests.length === 0 && (
-        <p style={{ fontSize: 13, color: "#bbb", textAlign: "center", padding: "20px 0" }}>No tests yet.</p>
+        <p style={{ fontSize: 13, color: "#667085", textAlign: "center", padding: "20px 0" }}>No tests yet.</p>
       )}
 
       {tests.length > 0 && (
@@ -533,7 +601,7 @@ function ClassTests({ terms }) {
           {/* Subject-wise analysis */}
           {testSubjects.length > 0 && (
             <div style={{ marginBottom: 20 }}>
-              <p style={{ fontSize: 12, fontWeight: 600, color: "#888", marginBottom: 10, letterSpacing: 0.3 }}>
+              <p style={{ fontSize: 12, fontWeight: 800, color: "#475467", marginBottom: 10, letterSpacing: 0.2 }}>
                 SUBJECT-WISE ANALYSIS
               </p>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 12 }}>
@@ -548,7 +616,7 @@ function ClassTests({ terms }) {
                       {/* Card header */}
                       <div style={{ padding: "10px 14px", background: col.bg, borderBottom: "1px solid #eee" }}>
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 2 }}>
-                          <span style={{ fontWeight: 700, fontSize: 13, color: col.color }}>{subj}</span>
+                          <span style={{ fontWeight: 800, fontSize: 14, color: col.color }}>{subj}</span>
                           <span style={{ fontSize: 12, fontWeight: 700, padding: "2px 10px", borderRadius: 99,
                             background: avgCol.bg, color: avgCol.color }}>Avg {stats.avg.toFixed(1)}%</span>
                         </div>
@@ -567,7 +635,7 @@ function ClassTests({ terms }) {
 
                       <div style={{ padding: "10px 14px" }}>
                         {/* Best 3 */}
-                        <p style={{ fontSize: 10, fontWeight: 600, color: "#aaa", marginBottom: 7, letterSpacing: 0.3 }}>
+                        <p style={{ fontSize: 10, fontWeight: 600, color: "#667085", marginBottom: 7, letterSpacing: 0.3 }}>
                           🏆 BEST 3 TESTS
                         </p>
                         <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 12 }}>
@@ -578,9 +646,9 @@ function ClassTests({ terms }) {
                             return (
                               <div key={t.id} style={{ display: "flex", alignItems: "center", gap: 7 }}>
                                 <span style={{ fontSize: 13, minWidth: 20 }}>{medals[idx]}</span>
-                                <span style={{ fontSize: 11, color: "#444", flex: 1, overflow: "hidden",
+                                <span style={{ fontSize: 11, color: "#344054", fontWeight: 700, flex: 1, overflow: "hidden",
                                   textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{t.title}</span>
-                                {t.date && <span style={{ fontSize: 9, color: "#bbb", whiteSpace: "nowrap" }}>{formatDate(t.date)}</span>}
+                                {t.date && <span style={{ fontSize: 9, color: "#667085", whiteSpace: "nowrap" }}>{formatDate(t.date)}</span>}
                                 <div style={{ width: 55, height: 5, background: "#eee", borderRadius: 99, overflow: "hidden", flexShrink: 0 }}>
                                   <div style={{ width: `${Math.min(pct, 100)}%`, height: "100%",
                                     background: tc.color, borderRadius: 99 }} />
@@ -595,7 +663,7 @@ function ClassTests({ terms }) {
                         {/* All other tests (if >3) */}
                         {stats.all.length > 3 && (
                           <>
-                            <p style={{ fontSize: 10, fontWeight: 600, color: "#aaa", marginBottom: 5, letterSpacing: 0.3 }}>
+                            <p style={{ fontSize: 10, fontWeight: 600, color: "#667085", marginBottom: 5, letterSpacing: 0.3 }}>
                               ALL TESTS  <span style={{ fontWeight: 400 }}>(★ = in top 3)</span>
                             </p>
                             <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
@@ -608,13 +676,13 @@ function ClassTests({ terms }) {
                                   return (
                                     <div key={t.id} style={{ display: "flex", alignItems: "center", gap: 6 }}>
                                       <span style={{ fontSize: 9, color: isBest ? "#f0a500" : "#ddd", minWidth: 12 }}>★</span>
-                                      <span style={{ fontSize: 10, color: "#555", flex: 1, overflow: "hidden",
+                                      <span style={{ fontSize: 10, color: "#344054", fontWeight: 600, flex: 1, overflow: "hidden",
                                         textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{t.title}</span>
                                       <div style={{ width: 48, height: 4, background: "#eee", borderRadius: 99, overflow: "hidden", flexShrink: 0 }}>
                                         <div style={{ width: `${Math.min(pct, 100)}%`, height: "100%",
-                                          background: isBest ? tc.color : "#ccc", borderRadius: 99 }} />
+                                          background: isBest ? tc.color : "#667085", borderRadius: 99 }} />
                                       </div>
-                                      <span style={{ fontSize: 10, color: isBest ? tc.color : "#aaa",
+                                      <span style={{ fontSize: 10, color: isBest ? tc.color : "#667085",
                                         minWidth: 38, textAlign: "right" }}>{pct.toFixed(1)}%</span>
                                     </div>
                                   );
@@ -635,10 +703,10 @@ function ClassTests({ terms }) {
             {["all", ...testSubjects].map(s => (
               <button key={s} onClick={() => setActiveTab(s)}
                 style={{ fontSize: 12, padding: "4px 14px", borderRadius: 99,
-                  border: "1px solid #e0e0e0", cursor: "pointer",
+                  border: "1px solid #475467", cursor: "pointer",
                   fontWeight: activeTab === s ? 600 : 400,
                   background: activeTab === s ? "#185FA5" : "#fff",
-                  color: activeTab === s ? "#fff" : "#555", transition: "all 0.15s" }}>
+                  color: activeTab === s ? "#fff" : "#475467", transition: "all 0.15s" }}>
                 {s === "all" ? "All tests" : s}
               </button>
             ))}
@@ -650,7 +718,7 @@ function ClassTests({ terms }) {
               .sort((a, b) => (b.date || "").localeCompare(a.date || ""))
               .map(t => {
                 const pct    = t.score !== null ? (t.score / t.total) * 100 : null;
-                const col    = pct !== null ? cgpaColor(pct / 25) : { color: "#aaa", bg: "#f5f5f5" };
+                const col    = pct !== null ? cgpaColor(pct / 25) : { color: "#667085", bg: "#f2f4f7" };
                 const isBest = t.subject
                   ? (subjectStats(t.subject)?.best3 || []).some(b => b.id === t.id)
                   : false;
@@ -659,7 +727,7 @@ function ClassTests({ terms }) {
                     <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
                       <div style={{ flex: 1, minWidth: 160 }}>
                         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                          <p style={{ fontWeight: 500, fontSize: 13 }}>{t.title}</p>
+                          <p style={{ fontWeight: 800, fontSize: 14, color: "#111827" }}>{t.title}</p>
                           {isBest && (
                             <span style={{ fontSize: 9, background: "#fff8e1", color: "#854F0B",
                               padding: "1px 6px", borderRadius: 99, fontWeight: 600 }}>Top 3</span>
@@ -668,7 +736,7 @@ function ClassTests({ terms }) {
                         <div style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center", marginTop: 2 }}>
                           {t.subject && <span style={{ fontSize: 10, padding: "1px 7px", borderRadius: 99,
                             background: "#e8f0fe", color: "#185FA5" }}>{t.subject}</span>}
-                          {t.date && <span style={{ fontSize: 10, color: "#888" }}>{formatDate(t.date)}</span>}
+                          {t.date && <span style={{ fontSize: 10, color: "#667085" }}>{formatDate(t.date)}</span>}
                         </div>
                       </div>
                       {pct !== null ? (
@@ -679,14 +747,15 @@ function ClassTests({ terms }) {
                           </div>
                           <span style={{ fontSize: 13, fontWeight: 700, color: col.color,
                             minWidth: 44, textAlign: "right" }}>{pct.toFixed(1)}%</span>
-                          <span style={{ fontSize: 11, color: "#aaa", whiteSpace: "nowrap" }}>{t.score}/{t.total}</span>
+                          <span style={{ fontSize: 11, color: "#667085", whiteSpace: "nowrap" }}>{t.score}/{t.total}</span>
                         </div>
                       ) : (
-                        <span style={{ fontSize: 12, color: "#bbb" }}>No score</span>
+                        <span style={{ fontSize: 12, color: "#667085" }}>No score</span>
                       )}
+                      <button onClick={() => startEditTest(t)} style={actionLinkStyle}>Edit</button>
                       <button onClick={() => deleteTest(t.id)}
                         style={{ background: "none", border: "none", cursor: "pointer",
-                          color: "#ccc", fontSize: 14, padding: "0 2px" }}>✕</button>
+                          color: "#667085", fontSize: 14, padding: "0 2px" }}>✕</button>
                     </div>
                   </div>
                 );
@@ -700,41 +769,76 @@ function ClassTests({ terms }) {
 
 // ── Main Component ────────────────────────────────────────────────────────
 export default function Academic() {
-  const [terms, setTerms]                 = useLocalStorage("dashboard-academic-terms", []);
+  const [terms, setTerms]                 = useLocalStorage("dashboard-academic-terms", [], 1);
   const [newTermName, setNewTermName]     = useState("");
   const [newTermStatus, setNewTermStatus] = useState("ongoing");
+  const [editingTermId, setEditingTermId] = useState(null);
 
-  const [tasks, setTasks]               = useLocalStorage("dashboard-academic-tasks", []);
+  const [tasks, setTasks]               = useLocalStorage("dashboard-academic-tasks", [], 1);
+  const [tests, setTests]               = useLocalStorage("dashboard-academic-tests", [], 1);
   const [taskTitle, setTaskTitle]       = useState("");
   const [taskSubject, setTaskSubject]   = useState("");
   const [taskDue, setTaskDue]           = useState("");
   const [taskPriority, setTaskPriority] = useState("medium");
+  const [editingTaskId, setEditingTaskId] = useState(null);
 
   function addTerm() {
     if (!newTermName.trim()) return;
-    setTerms(prev => [...prev, {
-      id: Date.now(), name: newTermName.trim(), status: newTermStatus, courses: [],
-    }]);
+    const existing = editingTermId ? terms.find(term => term.id === editingTermId) : null;
+    const entry = {
+      id: editingTermId || Date.now(), name: newTermName.trim(), status: newTermStatus, courses: existing?.courses || [],
+    };
+    setTerms(prev => editingTermId ? prev.map(term => term.id === editingTermId ? entry : term) : [...prev, entry]);
     setNewTermName(""); setNewTermStatus("ongoing");
+    setEditingTermId(null);
   }
 
   function updateTerm(id, patch) {
     setTerms(prev => prev.map(t => t.id === id ? { ...t, ...patch } : t));
   }
 
-  function deleteTerm(id) { setTerms(prev => prev.filter(t => t.id !== id)); }
+  function deleteTerm(id) {
+    setTerms(prev => prev.filter(t => t.id !== id));
+    if (editingTermId === id) {
+      setEditingTermId(null);
+      setNewTermName(""); setNewTermStatus("ongoing");
+    }
+  }
+
+  function startEditTerm(term) {
+    setEditingTermId(term.id);
+    setNewTermName(term.name || "");
+    setNewTermStatus(term.status || "ongoing");
+  }
 
   function addTask() {
     if (!taskTitle.trim()) return;
-    setTasks(prev => [...prev, {
-      id: Date.now(), title: taskTitle.trim(), subject: taskSubject.trim(),
-      due: taskDue, priority: taskPriority, done: false, addedDate: today,
-    }]);
+    const existing = editingTaskId ? tasks.find(task => task.id === editingTaskId) : null;
+    const entry = {
+      id: editingTaskId || Date.now(), title: taskTitle.trim(), subject: taskSubject.trim(),
+      due: taskDue, priority: taskPriority, done: existing?.done || false, addedDate: existing?.addedDate || today,
+    };
+    setTasks(prev => editingTaskId ? prev.map(task => task.id === editingTaskId ? entry : task) : [...prev, entry]);
     setTaskTitle(""); setTaskSubject(""); setTaskDue(""); setTaskPriority("medium");
+    setEditingTaskId(null);
   }
 
   function toggleTask(id) { setTasks(prev => prev.map(t => t.id === id ? { ...t, done: !t.done } : t)); }
-  function deleteTask(id) { setTasks(prev => prev.filter(t => t.id !== id)); }
+  function deleteTask(id) {
+    setTasks(prev => prev.filter(t => t.id !== id));
+    if (editingTaskId === id) {
+      setEditingTaskId(null);
+      setTaskTitle(""); setTaskSubject(""); setTaskDue(""); setTaskPriority("medium");
+    }
+  }
+
+  function startEditTask(task) {
+    setEditingTaskId(task.id);
+    setTaskTitle(task.title || "");
+    setTaskSubject(task.subject || "");
+    setTaskDue(task.due || "");
+    setTaskPriority(task.priority || "medium");
+  }
 
   const PRIORITY = {
     high:   { bg: "#fce8e8", color: "#A32D2D", label: "High" },
@@ -753,7 +857,7 @@ export default function Academic() {
 
   return (
     <div>
-      <h2 style={{ marginBottom: 20 }}>Academic</h2>
+      <h2 style={pageTitleStyle}>Academic Dashboard</h2>
 
       {/* Stats row */}
       {(terms.length > 0 || tasks.length > 0) && (
@@ -772,21 +876,23 @@ export default function Academic() {
           ].filter(Boolean).map(s => (
             <div key={s.label} style={{ flex: 1, minWidth: 80, padding: "12px 14px", borderRadius: 10,
               background: s.bg, color: s.color, textAlign: "center" }}>
-              <div style={{ fontSize: 20, fontWeight: 700 }}>{s.value}</div>
-              <div style={{ fontSize: 10, marginTop: 2 }}>{s.label}</div>
+              <div style={{ fontSize: 22, fontWeight: 800 }}>{s.value}</div>
+              <div style={{ fontSize: 11, marginTop: 3, fontWeight: 700, opacity: 0.92 }}>{s.label}</div>
             </div>
           ))}
         </div>
       )}
 
       {/* ══ COURSES — TERM WISE ══ */}
-      <h3 style={{ fontSize: 15, fontWeight: 600, marginBottom: 10, color: "#444" }}>
+      <h3 style={sectionTitleStyle}>
         Courses & Subjects — Term Wise
       </h3>
 
       {/* Add term */}
       <div className="card" style={{ marginBottom: 16 }}>
-        <p style={{ fontSize: 13, fontWeight: 500, marginBottom: 10, color: "#555" }}>Add new term / semester</p>
+        <p style={cardSectionTitleStyle}>
+          {editingTermId ? "Edit term / semester" : "Add new term / semester"}
+        </p>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "flex-end" }}>
           <div style={{ flex: 2, minWidth: 180 }}>
             <label style={labelStyle}>Term name</label>
@@ -801,7 +907,10 @@ export default function Academic() {
               {TERM_STATUS_OPTIONS.map(s => <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>)}
             </select>
           </div>
-          <button onClick={addTerm} style={{ alignSelf: "flex-end" }}>Add Term</button>
+          <div style={{ display: "flex", gap: 8 }}>
+            <button onClick={addTerm} style={{ alignSelf: "flex-end" }}>{editingTermId ? "Save Term" : "Add Term"}</button>
+            {editingTermId && <button onClick={() => { setEditingTermId(null); setNewTermName(""); setNewTermStatus("ongoing"); }} style={{ alignSelf: "flex-end" }}>Cancel</button>}
+          </div>
         </div>
       </div>
 
@@ -809,7 +918,7 @@ export default function Academic() {
       <CGPASummary terms={terms} />
 
       {terms.length === 0 && (
-        <p style={{ fontSize: 13, color: "#ccc", textAlign: "center", padding: "24px 0" }}>
+        <p style={{ fontSize: 13, color: "#667085", textAlign: "center", padding: "24px 0" }}>
           No terms yet. Add a term above to start tracking courses.
         </p>
       )}
@@ -820,7 +929,7 @@ export default function Academic() {
           .reduce((sum, currentTerm) => sum + currentTerm.courses.length, 0);
         const block = (
           <TermBlock key={term.id} term={term}
-            onUpdateTerm={updateTerm} onDeleteTerm={deleteTerm}
+            onUpdateTerm={updateTerm} onDeleteTerm={deleteTerm} onEditTerm={startEditTerm}
             colorOffset={colorOffset} />
         );
         return block;
@@ -828,15 +937,18 @@ export default function Academic() {
 
       {/* ══ CLASS TESTS ══ */}
       <div style={{ marginTop: 8, marginBottom: 28 }}>
-        <ClassTests terms={terms} />
+        <ClassTests terms={terms} tests={tests} setTests={setTests} />
       </div>
 
       {/* ══ TASKS ══ */}
-      <h3 style={{ fontSize: 15, fontWeight: 600, margin: "0 0 10px", color: "#444" }}>
+      <h3 style={{ ...sectionTitleStyle, margin: "0 0 12px" }}>
         Assignments & Tasks
       </h3>
 
       <div className="card" style={{ marginBottom: 16 }}>
+        <p style={cardSectionTitleStyle}>
+          {editingTaskId ? "Edit assignment / task" : "Add assignment / task"}
+        </p>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
           <input value={taskTitle} onChange={e => setTaskTitle(e.target.value)}
             onKeyDown={e => e.key === "Enter" && addTask()}
@@ -854,13 +966,16 @@ export default function Academic() {
             <label style={labelStyle}>Due date</label>
             <input type="date" value={taskDue} onChange={e => setTaskDue(e.target.value)} />
           </div>
-          <button onClick={addTask} style={{ alignSelf: "flex-end" }}>Add Task</button>
+          <div style={{ display: "flex", gap: 8 }}>
+            <button onClick={addTask} style={{ alignSelf: "flex-end" }}>{editingTaskId ? "Save Task" : "Add Task"}</button>
+            {editingTaskId && <button onClick={() => { setEditingTaskId(null); setTaskTitle(""); setTaskSubject(""); setTaskDue(""); setTaskPriority("medium"); }} style={{ ...ghostActionButtonStyle, alignSelf: "flex-end" }}>Cancel</button>}
+          </div>
         </div>
       </div>
 
       <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
         {tasks.length === 0 && (
-          <p style={{ fontSize: 13, color: "#bbb", textAlign: "center", padding: "24px 0" }}>
+          <p style={{ fontSize: 13, color: "#667085", textAlign: "center", padding: "24px 0" }}>
             No tasks yet. Add an assignment above.
           </p>
         )}
@@ -886,15 +1001,15 @@ export default function Academic() {
                   {t.done ? "✓" : ""}
                 </div>
                 <div style={{ flex: 1 }}>
-                  <p style={{ fontWeight: 500, fontSize: 14,
+                  <p style={{ fontWeight: 800, fontSize: 15,
                     textDecoration: t.done ? "line-through" : "none",
-                    color: t.done ? "#aaa" : "inherit" }}>
+                    color: t.done ? "#667085" : "#111827" }}>
                     {t.title}
                   </p>
-                  <p style={{ fontSize: 12, color: "#888", marginTop: 1 }}>
+                  <p style={{ fontSize: 12, color: "#667085", marginTop: 3, fontWeight: 600 }}>
                     {t.subject && <span style={{ marginRight: 8 }}>{t.subject}</span>}
                     {t.due && (
-                      <span style={{ color: isOverdue ? "#A32D2D" : "#888", fontWeight: isOverdue ? 600 : 400 }}>
+                      <span style={{ color: isOverdue ? "#A32D2D" : "#667085", fontWeight: isOverdue ? 600 : 400 }}>
                         {isOverdue ? "⚠ Overdue · " : "Due · "}{formatDate(t.due)}
                       </span>
                     )}
@@ -902,9 +1017,12 @@ export default function Academic() {
                 </div>
                 <span style={{ fontSize: 11, fontWeight: 500, padding: "3px 10px", borderRadius: 99,
                   background: pr.bg, color: pr.color, whiteSpace: "nowrap" }}>{pr.label}</span>
+                <button onClick={() => startEditTask(t)}
+                  style={{ background: "none", border: "none", cursor: "pointer",
+                    color: "#667085", fontSize: 12, padding: "0 4px" }}>Edit</button>
                 <button onClick={() => deleteTask(t.id)}
                   style={{ background: "none", border: "none", cursor: "pointer",
-                    color: "#ccc", fontSize: 14, padding: "0 4px" }}>✕</button>
+                    color: "#667085", fontSize: 14, padding: "0 4px" }}>✕</button>
               </div>
             );
           })}
