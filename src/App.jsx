@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { NavLink, Navigate, Route, Routes } from "react-router-dom";
 import Academic from "./pages/Academic";
 import Books from "./pages/Books";
@@ -6,7 +5,6 @@ import JobPrep from "./pages/JobPrep";
 import Movies from "./pages/Movies";
 import MyPlan from "./pages/MyPlan";
 import University from "./pages/University";
-import { useLocalStorage } from "./hooks/useLocalStorage";
 
 const pages = [
   {
@@ -100,96 +98,7 @@ function Home() {
   );
 }
 
-function Login({ onLogin }) {
-  const [mode, setMode] = useState("login");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    setError("");
-
-    const account = JSON.parse(localStorage.getItem("fahad-dashboard-account") || "null");
-    const normalizedEmail = email.trim().toLowerCase();
-
-    if (!normalizedEmail || password.length < 6) {
-      setError("Enter a valid email and a password with at least 6 characters.");
-      return;
-    }
-
-    if (mode === "register") {
-      if (!name.trim()) {
-        setError("Add your name to create your workspace.");
-        return;
-      }
-      if (account) {
-        setError("An account already exists on this device. Sign in instead.");
-        return;
-      }
-      localStorage.setItem(
-        "fahad-dashboard-account",
-        JSON.stringify({ name: name.trim(), email: normalizedEmail, password })
-      );
-      onLogin({ name: name.trim(), email: normalizedEmail });
-      return;
-    }
-
-    if (!account || account.email !== normalizedEmail || account.password !== password) {
-      setError("Those details do not match an account on this device.");
-      return;
-    }
-    onLogin({ name: account.name, email: account.email });
-  }
-
-  return (
-    <main className="auth-page">
-      <section className="auth-card">
-        <div className="auth-mark">FD</div>
-        <p className="eyebrow">Fahad Dashboard</p>
-        <h1>{mode === "login" ? "Welcome back" : "Create your workspace"}</h1>
-        <p className="auth-copy">
-          {mode === "login"
-            ? "Sign in to keep your plans, study notes, and lists together."
-            : "Set up a private dashboard for the things you are building."}
-        </p>
-
-        <form className="auth-form" onSubmit={handleSubmit}>
-          {mode === "register" && (
-            <label>
-              Your name
-              <input value={name} onChange={(event) => setName(event.target.value)} placeholder="Fahad" />
-            </label>
-          )}
-          <label>
-            Email
-            <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="you@example.com" />
-          </label>
-          <label>
-            Password
-            <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="At least 6 characters" />
-          </label>
-          {error && <p className="auth-error">{error}</p>}
-          <button type="submit">{mode === "login" ? "Sign in" : "Create account"}</button>
-        </form>
-
-        <button className="auth-switch" type="button" onClick={() => { setMode(mode === "login" ? "register" : "login"); setError(""); }}>
-          {mode === "login" ? "New here? Create an account" : "Already have an account? Sign in"}
-        </button>
-        <p className="auth-note">Your account is stored on this device.</p>
-      </section>
-    </main>
-  );
-}
-
 export default function App() {
-  const [session, setSession] = useLocalStorage("fahad-dashboard-session", null);
-
-  if (!session) {
-    return <Login onLogin={setSession} />;
-  }
-
   return (
     <div className="app-shell">
       <aside className="sidebar">
@@ -197,14 +106,9 @@ export default function App() {
           <span className="brand-mark">FD</span>
           <div>
             <strong>Fahad Dashboard</strong>
-            <span>{session.name}'s personal workspace</span>
+            <span>Personal workspace</span>
           </div>
         </NavLink>
-
-        <div className="account-bar">
-          <span>{session.email}</span>
-          <button type="button" onClick={() => setSession(null)}>Log out</button>
-        </div>
 
         <nav className="nav-list">
           {pages.map((page) => (

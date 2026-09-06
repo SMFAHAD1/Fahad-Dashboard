@@ -113,34 +113,6 @@ textarea {
   color: #9cb7d8;
 }
 
-.account-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  margin: -0.75rem 0 1.5rem;
-  padding: 0.7rem 0.8rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  color: #9cb7d8;
-  font-size: 0.75rem;
-}
-
-.account-bar span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.account-bar button {
-  flex: 0 0 auto;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: #f6bf72;
-  font-size: 0.75rem;
-}
-
 .brand-mark {
   display: grid;
   place-items: center;
@@ -373,91 +345,6 @@ textarea {
   color: var(--brand);
 }
 
-.auth-page {
-  display: grid;
-  place-items: center;
-  min-height: 100vh;
-  padding: 2rem 1rem;
-}
-
-.auth-card {
-  width: min(100%, 460px);
-  padding: 2.4rem;
-  border: 1px solid rgba(186, 200, 217, 0.65);
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.86);
-  box-shadow: 0 22px 70px rgba(27, 53, 84, 0.14);
-}
-
-.auth-mark {
-  display: grid;
-  place-items: center;
-  width: 56px;
-  height: 56px;
-  margin-bottom: 1.5rem;
-  border-radius: 16px;
-  background: linear-gradient(135deg, #f6bf72 0%, #ef8d63 100%);
-  color: #15263f;
-  font-family: "Fraunces", serif;
-  font-weight: 700;
-  box-shadow: 0 12px 30px rgba(255, 141, 90, 0.25);
-}
-
-.auth-card h1 {
-  margin: 0.35rem 0 0;
-  font-family: "Fraunces", serif;
-  font-size: clamp(2rem, 6vw, 2.8rem);
-  line-height: 1.05;
-}
-
-.auth-copy {
-  margin: 0.8rem 0 1.7rem;
-  color: var(--muted);
-}
-
-.auth-form {
-  display: grid;
-  gap: 1rem;
-}
-
-.auth-form label {
-  display: grid;
-  gap: 0.4rem;
-  color: var(--ink);
-  font-size: 0.86rem;
-  font-weight: 700;
-}
-
-.auth-form button {
-  width: 100%;
-  margin-top: 0.35rem;
-  font-weight: 800;
-}
-
-.auth-error {
-  margin: 0;
-  color: #a13d32;
-  font-size: 0.86rem;
-}
-
-.auth-switch {
-  width: 100%;
-  margin-top: 1rem;
-  padding: 0.4rem;
-  border: 0;
-  background: transparent;
-  color: var(--brand);
-  font-size: 0.88rem;
-  font-weight: 700;
-}
-
-.auth-note {
-  margin: 1rem 0 0;
-  color: var(--muted);
-  font-size: 0.76rem;
-  text-align: center;
-}
-
 .card {
   background: #fff;
   border: 1px solid #edf1f6;
@@ -531,10 +418,6 @@ textarea {
 }
 
 @media (max-width: 640px) {
-  .auth-card {
-    padding: 1.5rem;
-  }
-
   .content-area {
     padding: 1rem;
   }
