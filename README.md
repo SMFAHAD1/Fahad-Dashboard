@@ -1,11 +1,12 @@
 # Fahad Dashboard
 
-A personal multi-page dashboard built with React and Vite. It combines six focused pages into one site for academic tracking, personal planning, movies, job preparation, books, and university applications.
+A personal multi-page dashboard built with React and Vite. It combines seven focused pages into one site for academic tracking, personal planning, expenses, movies, job preparation, books, and university applications.
 
 ## Pages
 
 - `Academic`: Track terms, courses, CGPA, class tests, and tasks.
 - `My Plan`: Manage goals with weekly, monthly, and yearly analysis.
+- `Expenses`: Track spending, future purchases, and expense trends.
 - `Movies`: Save watched titles, ratings, watch dates, and yearly summaries.
 - `Job Prep`: Track applications, skills, and learning resources.
 - `Books`: Maintain a reading list and a buy list.
@@ -30,6 +31,7 @@ src/
   pages/
     Academic.jsx
     Books.jsx
+    Expenses.jsx
     JobPrep.jsx
     Movies.jsx
     MyPlan.jsx

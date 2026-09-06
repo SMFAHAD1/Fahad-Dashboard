@@ -1,6 +1,7 @@
 import { NavLink, Navigate, Route, Routes } from "react-router-dom";
 import Academic from "./pages/Academic";
 import Books from "./pages/Books";
+import Expenses from "./pages/Expenses";
 import JobPrep from "./pages/JobPrep";
 import Movies from "./pages/Movies";
 import MyPlan from "./pages/MyPlan";
@@ -20,6 +21,13 @@ const pages = [
     description: "Manage personal goals with weekly, monthly, and yearly analysis.",
     accent: "Focus map",
     element: <MyPlan />,
+  },
+  {
+    path: "/expenses",
+    label: "Expenses",
+    description: "Track spending, future purchases, and expense trends.",
+    accent: "Money log",
+    element: <Expenses />,
   },
   {
     path: "/movies",
@@ -59,7 +67,7 @@ function Home() {
           <p className="hero-kicker">Personal command center</p>
           <h2>One home for study, career, books, movies, and long-term plans.</h2>
           <p className="hero-text">
-            Fahad Dashboard brings all six trackers into a single calm space so
+            Fahad Dashboard brings all seven trackers into a single calm space so
             each part of your life stays organized without switching tools.
           </p>
           <div className="hero-actions">
@@ -74,7 +82,7 @@ function Home() {
 
         <div className="hero-stats">
           <div className="hero-stat">
-            <strong>6</strong>
+            <strong>7</strong>
             <span>Connected pages</span>
           </div>
           <div className="hero-stat">
