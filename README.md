@@ -17,7 +17,6 @@ A personal multi-page dashboard built with React and Vite. It combines six focus
 - `Vite`
 - `React Router`
 - `localStorage` for client-side persistence
-- `Vercel` for deployment
 
 ## Project Structure
 
@@ -63,27 +62,6 @@ npm run build
 npm run preview
 ```
 
-## Deployment on Vercel
-
-This project already includes a `vercel.json` rewrite so the React Router pages work correctly after deployment.
-
-### Option 1: Deploy with GitHub
-
-1. Push this project to a GitHub repository.
-2. Import the repository into Vercel.
-3. Vercel should detect it as a Vite project automatically.
-4. Use the default build settings:
-   - Build command: `npm run build`
-   - Output directory: `dist`
-5. Deploy.
-
-### Option 2: Deploy with Vercel CLI
-
-```bash
-npm i -g vercel
-vercel
-```
-
 ## Notes
 
 - Data is stored in the browser with `localStorage`, so each device or browser keeps its own saved entries.
@@ -95,7 +73,6 @@ vercel
 ```gitignore
 node_modules
 dist
-.vercel
 ```
 
 ## License
