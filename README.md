@@ -76,7 +76,3 @@ npm run preview
 node_modules
 dist
 ```
-
-## License
-
-You can add your preferred license here if you plan to publish the project publicly.
